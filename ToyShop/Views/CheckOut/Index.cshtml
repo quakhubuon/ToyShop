@@ -1,0 +1,152 @@
+﻿@model ToyShop.AspNetUser
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<style>
+    #cus-infor {
+        float: left;
+        margin-left: 30px;
+        width: 320px;
+    }
+
+    #group-form {
+        padding: 3px;
+    }
+
+    #cart-bill:not(:first-child) {
+        margin-left: 10px;
+    }
+
+    #cart-bill {
+        font-size: 1.3rem;
+    }
+
+    table {
+        text-align: center;
+    }
+
+    th {
+        text-align: center;
+    }
+
+    #cart-container {
+        margin-right: 20px;
+    }
+</style>
+
+<script language="javascript">
+    function enableDisable(num, textBox) {
+        if (num == true) {
+            document.getElementById(textBox).disabled = false;
+            document.getElementById(textBox).focus() = false;
+        } else {
+            document.getElementById(textBox).disabled = true;
+            document.getElementById(textBox).focus() = true;
+        }
+    }
+</script>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div id="content">
+        <div id="quanlygiohang">
+            <h1>Đặt hàng</h1>
+        </div>
+        @using (Html.BeginForm("Order", "CheckOut", FormMethod.Post))
+        {
+            <div id="cus-infor">
+                <h3>Thông tin khách hàng</h3>
+                <div id="group-form">
+                    <label for="UserName">Tên người dùng</label>
+                    <input style="display: block; width: 225px; padding: 5px" type="text" value="@Model.UserName" name="UserName" id="UserName" />
+                </div>
+
+                <div id="group-form">
+                    <label for="Email">Địa chỉ email</label>
+                    <input style="display: block; width: 225px; padding: 5px" type="email" value="@Model.Email" name="Email" id="Email" />
+                </div>
+
+                <div id="group-form">
+                    <label for="SoDienThoai">Số điện thoại</label>
+                    <input style="display: block; width: 225px; padding: 5px" value="@Model.PhoneNumber" name="SoDienThoai" />
+                </div>
+
+                <div id="group-form">
+                    <label for="DiaChi">Địa chỉ</label>
+                    <input style="display: block; width: 225px; padding: 5px" value="@Model.Address" name="DiaChi" />
+                </div>
+
+                <div id="group-form">
+                    <label style="display: block">
+                        <input type="checkbox" id="checkBox" name="checkBox"
+                               onclick="enableDisable(this.checked, 'textBox')"> Gửi đến địa chỉ mới
+                    </label>
+                </div>
+
+                <div id="group-form">
+                    <label for="DiaChi2">Địa chỉ mới</label>
+                    <input style="display: block; width: 225px; padding: 5px" name="DiaChi2" id="textBox" disabled />
+                </div>
+
+                <div id="group-form">
+                    <label for="GhiChu">Ghi chú</label>
+                    <input style="display: block; width: 225px; padding: 5px" name="GhiChu" id="GhiChu" />
+                </div>
+
+                <div style="margin-top: 10px" id="group-form">
+                    <label for="PhuongThucThanhToan"> Payment</label>
+                    <select style="width: 80px" name="PhuongThucThanhToan" id="PhuongThucThanhToan">
+                        <option value="COD" selected>COD</option>
+                    </select>
+                </div>
+                <div style="margin-top: 10px" id="group-form">
+                    <input type="hidden" value="@Model.Id" name="MaNguoiDung" />
+                    <input style="display: block; width: 225px; padding: 5px" type="submit" value="Đặt hàng" />
+                </div>
+            </div>
+        }
+            <div id="cus-cart">
+                <h3>Thông tin đơn hàng</h3>
+                <table id="cart-container" border="1">
+                    <thead>
+                        <tr>
+                            <th>Tên sản phẩm</th>
+                            <th>Số lượng</th>
+                            <th>Thành tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in (List<ToyShop.Models.BUS.CartItem>)Session["cart"])
+                        {
+                            decimal total = Convert.ToDecimal(item.quantity * item.product.Gia);
+                            <tr>
+                                <td>@item.product.TenSanPham</td>
+                                <td>@item.quantity</td>
+                                <td>@total</td>
+                            </tr>
+
+                        }
+                    <td colspan="3">
+                        Tổng cộng: @{
+                            List<ToyShop.Models.BUS.CartItem> cart = (List<ToyShop.Models.BUS.CartItem>)Session["cart"];
+                            var total_bill = cart.Sum(item => item.product.Gia * item.quantity);
+                        }
+                        @total_bill đ
+                    </td>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+}
+else
+{
+    <div id="content">
+        <div id="quanlygiohang">
+            <h1>Hãy đăng nhập để đặt hàng</h1>
+            <a style="text-decoration: none" href="@Url.Action("Login", "Account", new {ReturnUrl="/CheckOut/Index"} )">Nhấn vào đây để đăng nhập</a>
+        </div>
+    </div>
+}
+

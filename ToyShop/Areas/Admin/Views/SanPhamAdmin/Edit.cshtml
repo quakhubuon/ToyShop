@@ -1,0 +1,90 @@
+﻿@model ToyShop.SanPham
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <!-- row -->
+    <div class="row">
+        <div class="col-xl-12 col-xxl-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Thêm sản phẩm</h4>
+                </div>
+                <div class="card-body">
+                    <div class="basic-form">
+                        @using (Html.BeginForm("Edit", "SanPhamAdmin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            <input type="hidden" value="@Model.MaSanPham" class="form-control input-default" name="MaSanPham">
+                            <div class="form-group">
+                                <label>Tên sản phẩm</label>
+                                <input type="text" value="@Model.TenSanPham" class="form-control input-default" name="TenSanPham">
+                            </div>
+                            <div class="form-group">
+                                <label>Hình sản phẩm</label>
+                                <input type="file" value="@Model.Hinh" class="form-control input-default" name="Hinh">
+                            </div>
+
+                            <div class="form-group">
+                                 <label style="display: block">Hình hiện tại</label>
+                                 <img style="width: 100px;" src="~/Asset/images/@Model.Hinh" />
+                            </div>
+                            <div class="form-group">
+                                <label>Giá sản phẩm</label>
+                                <input type="number" value="@Model.Gia" class="form-control input-default" name="Gia">
+                            </div>
+                            <div class="form-group">
+                                <label>Mô tả sản phẩm</label>
+                                <input type="text" value="@Model.MoTa" class="form-control input-default" name="MoTa">
+                            </div>
+                            <div class="form-group">
+                                <label>Số lượng sản phẩm</label>
+                                <input type="number" value="@Model.SoLuong" class="form-control input-default" name="SoLuong">
+                            </div>
+                            <div class="form-group">
+                                <label>Lượt xem sản phẩm</label>
+                                <input type="number" value="@Model.LuotXem" class="form-control input-default" name="LuotXem">
+                            </div>
+                            <div class="form-group">
+                                <label>Hãng sản xuất</label>
+                                <select class="form-control" name="MaHangSanXuat">
+                                    @foreach (var item in ViewBag.ListHangSanXuat)
+                                    {
+                                        <option value="@item.MaHangSanXuat" @(Model.MaHangSanXuat == item.MaHangSanXuat ? "selected" : "")>@item.TenHangSanXuat</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Loại sản phẩm</label>
+                                <select class="form-control" name="MaLoaiSanPham">
+                                    @foreach (var item in ViewBag.ListLoaiSanPham)
+                                    {
+                                        <option value="@item.MaLoaiSanPham" @(Model.MaLoaiSanPham == item.MaLoaiSanPham ? "selected" : "")>@item.TenLoaiSanPham</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Tình trạng sản phẩm</label>
+                                <select class="form-control" name="TinhTrang">
+                                    @if (Model.TinhTrang == 0)
+                                    {
+                                        <option value="1">Khóa</option>
+                                        <option value="0" selected>Mở</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="1" selected>Khóa</option>
+                                        <option value="0">Mở</option>
+                                    }
+                                </select>
+                            </div>
+                            <input type="submit" class="btn  btn-square btn-info" />
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

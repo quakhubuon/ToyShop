@@ -1,0 +1,38 @@
+﻿@model IEnumerable<ToyShop.DonHang> 
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<div id="content">
+    <div id="quanlygiohang">
+        <h1>Lịch sử đơn hàng</h1>
+        <table>
+            <tr>
+                <th width="20">Mã đơn hàng</th>
+                <th width="60">Số điện thoại</th>
+                <th width="50">Địa chỉ</th>
+                <th width="50">Phương thức thanh toán</th>
+                <th width="50">Ngày thanh toán</th>
+                <th width="50">Tổng tiền</th>
+                <th width="50">Thao tác</th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr style="text-align: center">
+                    <td>@item.MaDonHang</td>
+                    <td>@item.SoDienThoai</td>
+                    <td>@item.DiaChi</td>
+                    <td>@item.PhuongThucThanhToan</td>
+                    <td>@item.NgayThanhToan</td>
+                    <td>@item.TongTien</td>
+                    <td>
+                        <a style="color: black;" href="@Url.Action("Detail", "History", new {id=item.MaDonHang})"><input type="button" value="Chi tiết" /></a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+

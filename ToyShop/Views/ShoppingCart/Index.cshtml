@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+@if (Session["cart"] != null)
+{  
+    <div id="content">
+        <div id="quanlygiohang">
+            <h1>Quản lý giỏ hàng</h1>
+            <table>
+                <tr>
+                    <th width="20">STT</th>
+                    <th>Tên sản phẩm</th>
+                    <th width="60">Hình</th>
+                    <th width="50">Giá</th>
+                    <th width="50">Số lượng</th>
+                    <th width="50">Cập nhật số lượng</th>
+                    <th width="50">Tổng tiền</th>
+                    <th width="50">Xóa sản phẩm</th>
+                </tr>
+                @foreach (var item in (List<ToyShop.Models.BUS.CartItem>)Session["cart"])
+                {
+                    var stt = 1;
+                    decimal total = Convert.ToDecimal(item.quantity * item.product.Gia);
+                    <tr>
+                        <td>@stt</td>
+                        <td>@item.product.TenSanPham</td>
+                        <td align="center">
+                            <img src="~/Asset/images/@item.product.Hinh" width="50" />
+                        </td>
+                        <td>@item.product.Gia VNĐ</td>
+                        @using (Html.BeginForm("Update", "ShoppingCart", FormMethod.Post))
+                        {
+                            <td>
+                                <input style="width: 50px" type="number"
+                                       name="quantity"
+                                       value="@item.quantity" min="1" />
+                            </td>
+                            <td>
+                                <input type="hidden" name="MaSanPham" value="@item.product.MaSanPham" />
+                                <input type="submit" value="Cập nhật" />
+                            </td>
+                        }
+                        <td>@total đ</td>
+                        <td>
+                            <a style="color: black;" onclick="return confirm('Do you want to delete this item???')" href="@Url.Action("Delete", "ShoppingCart", new { id = item.product.MaSanPham })"><input type="button" value="Xoá" /></a>
+                        </td>
+                    </tr>
+                        stt++;
+                }
+            </table>
+            <div class="pprice">
+                Tổng thành tiền:  @{
+                    List<ToyShop.Models.BUS.CartItem> cart = (List<ToyShop.Models.BUS.CartItem>)Session["cart"];
+                    var total_bill = cart.Sum(item => item.product.Gia * item.quantity);
+                }
+                @total_bill đ
+            </div>
+            <div style="margin-top: 10px;">
+                <a style="color: black; font-weight:100" href="/Home/Index">
+                    <input type="button" value="Tiếp tục mua hàng" />
+                </a>
+                <a style="margin-left: 10px" href="/CheckOut/Index">
+                    <img src="~/Asset/img/dathang.png" width="100" />
+                </a>
+                <a style="color: black; font-weight:100; float: right" onclick="return confirm('Do you want to delete all item???')" href="@Url.Action("DeleteAll", "ShoppingCart")">
+                    <input type="button" value="Hủy giỏ hàng" />
+                </a>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div id="content">
+        <div id="quanlygiohang">
+            <h1>Quản lý giỏ hàng</h1>
+            <h4>Không có sản phầm nảo trong giỏ hàng</h4>
+            <a style="color: black;" href="/Home/Index">
+                <input type="button" value="Mua hàng" />
+            </a>
+        </div>
+    </div>
+}
+
+
+

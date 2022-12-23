@@ -1,0 +1,52 @@
+﻿<div id="header"></div>
+<a href="~/Home/Index">
+    <img src="~/Asset/img/logo.gif" width="850" height="63">
+</a>
+<div id="login_nav">
+    @Html.Partial("_LoginPartial")
+</div>
+<img src="~/Asset/img/header_1.png" width="850">
+<img src="~/Asset/img/header_2.png" width="850">
+@using (Html.BeginForm("Index", "Search", FormMethod.Post, new { @id = "seach-form" }))
+{
+    <input name="keyword"
+           type="text"
+           id="txtPS"
+           style="width: 190px; color: black; font-weight: 100; margin-left: 2px" />
+    <input style="color: black; font-weight: 100" type="submit" value="Tìm kiếm" />
+}
+<div>
+    <a href="/ShoppingCart/Index"><img style="width: 35px; float: right; margin-top: -35px;" src="~/Asset/img/manage_shopping.png" /></a>
+    @if (Session["cart"] != null)
+    {
+        <p style=" float: right; margin-top: -32px;">
+            @{
+                List<ToyShop.Models.BUS.CartItem> cart = (List<ToyShop.Models.BUS.CartItem>)Session["cart"];
+                var count = cart.Count();
+            }
+            @count
+        </p>
+    } else
+            {
+<p style=" float: right; margin-top: -32px;">0</p>
+            }
+    </div>
+<style>
+
+    li {
+        list-style-type: none;
+        display: inline-block;
+    }
+
+        li a {
+            padding: 10px;
+            font-size: 1rem;
+            color: white;
+            line-height: 31px;
+        }
+
+    a:hover {
+        color: #39F;
+        text-decoration: none;
+    }
+</style>

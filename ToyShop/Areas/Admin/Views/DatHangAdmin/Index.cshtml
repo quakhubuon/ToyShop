@@ -1,0 +1,99 @@
+﻿@model PagedList.IPagedList<ToyShop.DonHang>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml";
+}
+
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Bảng sản phẩm</h4>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table primary-table-bordered">
+                    <thead class="thead-primary">
+                        <tr>
+                            <th scope="col">Mã đơn hàng</th>
+                            <th scope="col">Tên khách hàng</th>
+                            <th scope="col">Số điện thoại</th>
+                            <th scope="col">Địa chỉ</th>
+                            <th scope="col">Ghi chú</th>
+                            <th scope="col">Phương thức thanh toán</th>
+                            <th scope="col">Ngày thanh toán</th>
+                            <th scope="col">Ngày giao hàng</th>
+                            <th scope="col">Tổng tiền</th>
+                            <th scope="col">Tình trạng</th>
+                            <th scope="col">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr style="text-align: center">
+                                <td>@item.MaDonHang</td>
+                                @foreach (var nd in ViewBag.ListNguoiDung)
+                                {
+                                    if (item.MaNguoiDung == nd.Id)
+                                    {
+                                        <td>@nd.UserName</td>
+                                    }
+                                }
+                                <td>@item.SoDienThoai</td>
+                                <td>@item.DiaChi</td>
+                                <td>@item.GhiChu</td>
+                                <td>@item.PhuongThucThanhToan</td>
+                                <td>@item.NgayThanhToan</td>
+                                <td>@item.NgayGiaoHang</td>
+                                <td>@item.TongTien</td>
+
+                                @if (item.TinhTrang == "0")
+                                {
+                                    <td>Chưa xử lý</td>
+                                }
+                                @if (item.TinhTrang == "1")
+                                {
+                                    <td>Đang xử lý</td>
+                                }
+                                @if (item.TinhTrang == "2")
+                                {
+                                    <td>Đang giao hàng</td>
+                                }
+                                @if (item.TinhTrang == "3")
+                                {
+                                    <td>Đã giao hàng</td>
+                                }
+
+                                @if (item.TinhTrang == "4")
+                                {
+                                    <td>Hủy</td>
+                                }
+
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">Chọn</button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="@Url.Action("Details", "DatHangAdmin", new {id = item.MaDonHang})">Chi tiết</a>
+                                            <a class="dropdown-item" href="@Url.Action("Delete", "DatHangAdmin", new {id = item.MaDonHang})" onclick="return confirm('Do you want to delete???');">Xóa</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="pageList">
+                    <br />
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions()
+               {
+                   LiElementClasses = new List<string> { "page-link", "page-item", "active", "page-indicator" },
+                   UlElementClasses = new List<string> { "pagination" },
+               })
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+

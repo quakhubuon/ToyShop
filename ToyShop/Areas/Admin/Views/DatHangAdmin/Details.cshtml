@@ -1,0 +1,175 @@
+﻿@model ToyShop.DonHang
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml";
+}
+
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Thông tin đơn hàng</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table student-data-table m-t-20">
+                        <thead>
+                            <tr>
+                                <th>Tên khách hàng</th>
+                                <th>Điện thoại</th>
+                                <th>Ghi chú</th>
+                                <th>Ngày đặt hàng</th>
+                                <th>Địa chỉ giao hàng</th>
+                                <th>Trạng thái đơn</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                @foreach (var nd in ViewBag.ListNguoiDung)
+                                {
+                                    if (Model.MaNguoiDung == nd.Id)
+                                    {
+                                        <td>@nd.UserName</td>
+                                    }
+                                }
+                                <td>
+                                    @Model.SoDienThoai
+                                </td>
+                                <td>
+                                    @Model.GhiChu
+                                </td>
+                                <td>
+                                    @Model.NgayThanhToan
+                                </td>
+                                <td>
+                                    @Model.DiaChi
+                                </td>
+                                <td>
+                                    @Model.TinhTrang
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Chi tiết đơn hàng</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table student-data-table m-t-20">
+                        <thead>
+                            <tr>
+                                <th>Tên sản phẩm</th>
+                                <th>Ảnh</th>
+                                <th>Số lượng</th>
+                                <th>Giá</th>
+                                <th>Thành tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in ViewBag.ListChiTietDonHang)
+                            {
+                                decimal total = Convert.ToDecimal(item.SoLuong * item.Gia);
+                                <tr>
+                                    @foreach (var sp in ViewBag.ListSanPham)
+                                    {
+                                        if (item.MaSanPham == sp.MaSanPham)
+                                        {
+                                            <td>
+                                                @sp.TenSanPham
+                                            </td>
+                                            <td>
+                                                <img src="~/Asset/images/@sp.Hinh" style="width: 100px" />
+                                            </td>
+                                        }
+                                    }
+                                    <td>
+                                        @item.SoLuong
+                                    </td>
+                                    <td>
+                                        @item.Gia đ
+                                    </td>
+                                    <td>
+                                        @total đ
+                                    </td>                                    
+                                </tr>
+                            }
+                            <td style="text-align: center" colspan="5">Tổng hóa đơn: @Model.TongTien đ</td>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Trạng thái đơn hàng</h4>
+            </div>
+            <div class="card-body">
+                <div class="basic-form">
+                    @using (Html.BeginForm("Update", "DatHangAdmin"))
+                    {
+                        <div class="form-group">
+                            <label>Trạng thái đơn hàng (chọn một):</label>
+                            <select class="form-control" id="sel1" name="TinhTrang">
+
+                                @if (Model.TinhTrang == "0")
+                                {
+                                    <option value="0" selected>Chưa xử lý</option>
+                                    <option value="1">Đã xử lý</option>
+                                    <option value="2">Đang giao hàng</option>
+                                    <option value="3">Đã giao hàng</option>
+                                    <option value="4">Hủy</option>
+                                }
+
+                                @if (Model.TinhTrang == "1")
+                                {
+                                    <option value="0" disabled>Chưa xử lý</option>
+                                    <option value="1" selected>Đã xử lý</option>
+                                    <option value="2">Đang giao hàng</option>
+                                    <option value="3">Đã giao hàng</option>
+                                    <option value="4">Hủy</option>
+                                }
+
+                                @if (Model.TinhTrang == "2")
+                                {
+                                    <option value="0" disabled>Chưa xử lý</option>
+                                    <option value="1" disabled>Đã xử lý</option>
+                                    <option value="2" selected>Đang giao hàng</option>
+                                    <option value="3">Đã giao hàng</option>
+                                    <option value="4">Hủy</option>
+                                }
+
+                                @if (Model.TinhTrang == "3")
+                                {
+                                    <option value="0" disabled>Chưa xử lý</option>
+                                    <option value="1" disabled>Đã xử lý</option>
+                                    <option value="2" disabled>Đang giao hàng</option>
+                                    <option value="3" selected>Đã giao hàng</option>
+                                    <option value="4">Hủy</option>
+                                }
+
+                                @if (Model.TinhTrang == "4")
+                                {
+                                    <option value="0" disabled>Chưa xử lý</option>
+                                    <option value="1" disabled>Đã xử lý</option>
+                                    <option value="2" disabled>Đang giao hàng</option>
+                                    <option value="3" disabled>Đã giao hàng</option>
+                                    <option value="4" selected>Hủy</option>
+                                }
+
+                            </select>
+                        </div>
+                        <input type="hidden" value="@Model.MaDonHang" name="MaDonHang" />
+                        <button type="submit" class="btn  btn-square btn-info">Submit</button>
+                    }
+                    </div>
+            </div>
+        </div>
+    </div>
+

@@ -1,0 +1,36 @@
+﻿@model IEnumerable<ToyShop.ChiTietDonHang>
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<div id="content">
+    <div id="quanlygiohang">
+        <h1>Lịch sử đơn hàng</h1>
+        <table>
+            <tr>
+                <th width="20">Mã đơn hàng</th>
+                <th width="60">Tên sản phẩm</th>
+                <th width="50">Số lượng</th>
+                <th width="50">Giá</th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr style="text-align: center">
+                    <td>@item.MaDonHang</td>
+                    @foreach (var sp in ViewBag.ListSanPham)
+                    {
+                        if (item.MaSanPham == sp.MaSanPham)
+                        {
+                            <td>@sp.TenSanPham</td>
+                        }
+                    }
+                    <td>@item.SoLuong</td>
+                    <td>@item.Gia</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+

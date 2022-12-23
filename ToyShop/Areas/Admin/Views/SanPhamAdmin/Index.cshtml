@@ -1,0 +1,96 @@
+﻿@model PagedList.IPagedList<ToyShop.SanPham>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml";
+}
+
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Bảng sản phẩm</h4>
+            <a href="/Admin/SanPhamAdmin/Create" type="button" class="btn btn-rounded btn-info">
+                <span class="btn-icon-left text-info">
+                    <i class="fa fa-plus color-info"></i>
+                </span>Add
+            </a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table primary-table-bordered">
+                    <thead class="thead-primary">
+                        <tr>
+                            <th scope="col">Mã sản phẩm</th>
+                            <th scope="col">Hãng sản xuất</th>
+                            <th scope="col">Loại sản phẩm</th>
+                            <th scope="col">Tên sản phẩm</th>
+                            <th scope="col">Hình</th>
+                            <th scope="col">Giá</th>
+                            <th scope="col">Mô tả</th>
+                            <th scope="col">Số lượng</th>
+                            <th scope="col">Lượt xem</th>
+                            <th scope="col">Tình trạng</th>
+                            <th scope="col">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.MaSanPham</td>
+                                @foreach (var hsx in ViewBag.ListHangSanXuat)
+                                {
+                                    if (item.MaHangSanXuat == hsx.MaHangSanXuat)
+                                    {
+                                        <td>@hsx.TenHangSanXuat</td>
+                                    }
+                                }
+                                @foreach (var lsp in ViewBag.ListLoaiSanPham)
+                                {
+                                    if (item.MaLoaiSanPham == lsp.MaLoaiSanPham)
+                                    {
+                                        <td>@lsp.TenLoaiSanPham</td>
+                                    }
+                                }
+                                <td>@item.TenSanPham</td>
+                                <td><img style="width: 100px;" src="~/Asset/images/@item.Hinh" /></td>
+                                <td>@item.Gia VNĐ</td>
+                                <td>@item.MoTa</td>
+                                <td>@item.SoLuong</td>
+                                <td>@item.LuotXem</td>
+                                @if (item.TinhTrang == 1)
+                                {
+                                    <td>Khóa</td>
+                                }
+                                else
+                                {
+                                    <td>Mở</td>
+                                }
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">Chọn</button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="@Url.Action("Edit", "SanPhamAdmin", new {id=item.MaSanPham})">Sửa</a>
+                                            <a class="dropdown-item" href="@Url.Action("Delete", "SanPhamAdmin", new {id=item.MaSanPham})" onclick="return confirm('Do you want to delete???');">Xóa</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                        }
+                    </tbody>
+                </table>
+                <div class="pageList">
+                    <br />
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions()
+               {
+                   LiElementClasses = new List<string> { "page-link", "page-item", "active", "page-indicator" },
+                   UlElementClasses = new List<string> { "pagination" },
+               })
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+

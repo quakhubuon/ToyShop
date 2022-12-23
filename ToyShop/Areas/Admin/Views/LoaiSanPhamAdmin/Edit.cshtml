@@ -1,0 +1,46 @@
+﻿@model ToyShop.LoaiSanPham
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <!-- row -->
+    <div class="row">
+        <div class="col-xl-12 col-xxl-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Thêm loại sản phẩm</h4>
+                </div>
+                <div class="card-body">
+                    <div class="basic-form">
+                        @using (Html.BeginForm("Edit", "LoaiSanPhamAdmin", FormMethod.Post))
+                        {
+                            <input type="hidden" value="@Model.MaLoaiSanPham" class="form-control input-default" name="MaLoaiSanPham">
+                            <div class="form-group">
+                                <label>Tên loại sản phầm</label>
+                                <input type="text" value="@Model.TenLoaiSanPham" class="form-control input-default" name="TenLoaiSanPham">
+                            </div>
+                            <div class="form-group">
+                                <label>Tình trạng loại sản phẩm</label>
+                                <select class="form-control" name="TinhTrangLSP">
+                                    @if (Model.TinhTrangLSP == 0)
+                                    {
+                                        <option value="1">Khóa</option>
+                                        <option value="0" selected>Mở</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="1" selected>Khóa</option>
+                                        <option value="0">Mở</option>
+                                    }
+                                </select>
+                            </div>
+                            <input type="submit" class="btn  btn-square btn-info" />
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

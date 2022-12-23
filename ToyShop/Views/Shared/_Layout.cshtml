@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    <link rel="stylesheet" type="text/css" href="~/Asset/css/style2.css">
+    @Scripts.Render("~/bundles/modernizr")
+
+    <style>
+        li {
+            display: inline-block;
+        }
+
+            li a {
+                padding: 10px;
+                font-size: 1rem;
+                color: white;
+            }
+
+        a:hover {
+            color: #39F;
+            text-decoration: none;
+        }
+    </style>
+
+</head>
+<body>
+    <div id="wrapper">
+        @*<div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" title="more options">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
+            </div>
+        </div>*@
+        <div id="header"></div>
+        <a href="~/Home/Index">
+            <img src="~/Asset/img/logo.gif" width="850" height="63">
+        </a>
+        <div id="login_nav">
+            @Html.Partial("_LoginPartial")
+        </div>
+        <img src="~/Asset/img/header_1.png" width="850">
+        <img src="~/Asset/img/header_2.png" width="850">
+
+
+        @RenderBody()
+        <hr />
+        @Html.Partial("_Footer")
+
+    </div>
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)       
+</body>
+</html>

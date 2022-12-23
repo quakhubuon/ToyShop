@@ -1,0 +1,57 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Website BabyShop</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/Asset/css/style.css">
+    <style>
+        #login_nav {
+            color: #FFF;
+            font-weight: bold;
+            text-decoration: none;
+            position: absolute;
+            width: 620px;
+            margin-left: 225px;
+            margin-top: -45px;
+            text-align: right;
+            font-size: 1.5rem;
+        }
+
+        .pageList {
+            float: right;
+            text-align: center;
+            width: 650px;
+        }
+
+        .label {
+            width: 100px;
+            text-align: right;
+            font-size: 13px;
+            display: inline-block;
+            margin-right: 5px;
+            color: black;
+            font-weight:100;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        @Html.Partial("_Header")
+        <div id="sidebar">
+            <dl>
+                @Html.Partial("_HangSanXuat", ToyShop.Models.BUS.HangSanXuatBus.DanhSachHSX())
+            </dl>
+            <dl>
+                @Html.Partial("_LoaiSanPham", ToyShop.Models.BUS.LoaiSanPhamBus.DanhSachLSP())
+            </dl>
+        </div>
+        @RenderBody()
+        @Html.Partial("_Footer")
+        @RenderSection("scripts", required: false)
+    </div>
+</body>
+</html>

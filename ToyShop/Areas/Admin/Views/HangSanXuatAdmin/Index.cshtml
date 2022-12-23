@@ -1,0 +1,56 @@
+﻿@model IEnumerable<ToyShop.HangSanXuat>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_MainLayout.cshtml";
+}
+
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Bảng hãng sản xuất</h4>
+            <a href="/Admin/HangSanXuatAdmin/Create" type="button" class="btn btn-rounded btn-info">
+                <span class="btn-icon-left text-info">
+                    <i class="fa fa-plus color-info"></i>
+                </span>Add
+            </a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table primary-table-bordered">
+                    <thead class="thead-primary">
+                        <tr>
+                            <th scope="col">Mã hãng sản xuất</th>
+                            <th scope="col">Tên hãng sản xuất</th>
+                            <th scope="col">Tình trạng</th>
+                            <th scope="col">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var item in Model) { 
+                            <tr>
+                                <th>@item.MaHangSanXuat</th>
+                                <td>@item.TenHangSanXuat</td>
+                                @if (item.TinhTrangHSX == 1)
+                                {
+                                    <td>Khóa</td>
+                                 } else
+                                 {
+                                    <td>Mở</td>
+                                 }
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">Chọn</button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="@Url.Action("Edit", "HangSanXuatAdmin", new {id=item.MaHangSanXuat})">Sửa</a>
+                                            <a class="dropdown-item" href="@Url.Action("Delete", "HangSanXuatAdmin", new {id=item.MaHangSanXuat})" onclick="return confirm('Do you want to delete???');">Xóa</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

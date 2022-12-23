@@ -1,0 +1,62 @@
+﻿@model ToyShop.SanPham
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<div id="content">
+    <div id="chitietsp">
+        <div id="chitietleft">
+            <img src="~/Asset/images/@Model.Hinh" />
+        </div>
+        <div id="chitietright">
+            <div>
+                <span class="label">Tên sản phẩm</span>
+                <span class="productname">@Model.TenSanPham</span>
+            </div>
+            <div>
+                <span class="label">Giá</span>
+                <span class="price">@Model.Gia đ</span>
+            </div>
+            <div>
+                <span class="label">Hãng sản xuất</span>
+                @foreach (var hsx in ViewBag.ListHangSanXuat)
+                {
+                    if (Model.MaHangSanXuat == hsx.MaHangSanXuat)
+                    {
+                        <span class="data">@hsx.TenHangSanXuat</span>
+                    }
+                }
+            </div>
+            <div>
+                <span class="label">Loại sản phẩm</span>
+                @foreach (var lsp in ViewBag.ListLoaiSanPham)
+                {
+                    if (Model.MaLoaiSanPham == lsp.MaLoaiSanPham)
+                    {
+                        <span class="data">@lsp.TenLoaiSanPham</span>
+                    }
+                }
+            </div>
+            <div>
+                <span class="label">Số lượng</span>
+                <span class="data">@Model.SoLuong</span>
+            </div>
+            <div>
+                <span class="label">Lượt xem</span>
+                <span class="data">@Model.LuotXem</span>
+            </div>
+            @using (Html.BeginForm("AddToCartQuantity", "ShoppingCart", FormMethod.Post))
+            {
+                <div>
+                    <span class="label">Sl cần mua</span>
+                    <input type="number" style="width: 150px" name="quantity" value="1" min="1" required />
+                    <input type="hidden" value="@Model.MaSanPham" name="MaSanPham" />
+                    <input style="margin-bottom: -15px" type="image" src="~/Asset/img/shopping_cart.png" alt="Submit" width="32">
+                </div>
+            }
+            </div>
+        <div id="mota">@Model.MoTa</div>
+    </div>
+</div>
+

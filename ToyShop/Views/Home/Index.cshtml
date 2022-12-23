@@ -1,0 +1,48 @@
+﻿@model PagedList.IPagedList<ToyShop.SanPham>
+@using PagedList.Mvc;
+@{
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<script>
+        function submit() {
+            let form = document.getElementById("form");
+            form.submit();
+            alert("Data stored in database!");
+        }
+</script>
+
+<div id="content">
+    <h2>Sản phẩm mới nhất</h2> 
+    @foreach (var item in Model)
+    {
+        <div class="box">
+            @using (Html.BeginForm("Detail", "Home", FormMethod.Post, new { id = "form" }))
+            {
+                <input type="hidden" value="@item.MaSanPham" name="MaSanPham" />
+                <input type="image" src="~/Asset/images/@item.Hinh" alt="Submit" width="150" height="100">
+            }
+            <div class="pame">@item.TenSanPham</div>
+            <div class="pprice">@item.Gia đ</div>
+            @using (Html.BeginForm("AddToCart", "ShoppingCart", FormMethod.Post))
+            {
+                <input type="hidden" value="@item.MaSanPham" name="MaSanPham" />
+                <input style="margin-top: 5px;" type="submit" value="Thêm vào giỏ hàng" />
+            }
+            <div class="action">
+                @using (Html.BeginForm("Detail", "Home", FormMethod.Post))
+                {
+                    <input type="hidden" value="@item.MaSanPham" name="MaSanPham" />
+                    <input style="margin-top: 5px; color: black; font-weight: 100" type="submit" value="Chi tiết" />
+                }
+            </div>
+        </div>
+    }
+        <div class="pageList">
+            <br />
+            Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+            @Html.PagedListPager(Model, page => Url.Action("Index", "Home", new { page }))
+       </div>
+</div>
+
+

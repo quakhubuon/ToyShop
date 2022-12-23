@@ -1,0 +1,52 @@
+﻿body {
+    font-family: tahoma, helvetica, arial, sans-serif;
+    font-size: 10px;
+    background: url(../img/page_bg.gif);
+    margin: 0px;
+    padding: 0px;
+}
+
+#wrapper {
+    margin: auto;
+    text-align: left;
+    width: 850px;
+    border-left: 2px solid #FFF;
+    border-right: 2px solid #FFF;
+    margin-bottom: 10px;
+    background: #FFF;
+    color: #000;
+}
+
+#header {
+    background: url(../img/header_bg.gif) repeat-x;
+    padding-top: 9px;
+}
+
+
+
+#footer {
+    clear: both;
+    background: #C80000 url(../footer_bg.gif) repeat-x;
+    padding: 8px 8px 5px 8px;
+    text-align: center;
+    border-bottom: 2px solid #FFF;
+    font-weight: bold;
+    color: #FFF;
+}
+
+#login_nav {
+    color: #FFF;
+    font-weight: bold;
+    text-decoration: none;
+    position: absolute;
+    width: 620px;
+    margin-left: 225px;
+    margin-top: -40px;
+    text-align: right;
+}
+
+a {
+    text-decoration: none;
+}
+
+
